@@ -1,6 +1,6 @@
 # 基本のコントローラー
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!, except: [:edit, :destroy, :index]
+  before_action :authenticate_user!, except: [:destroy, :index, :show]
   before_action :move_to_index, only:[:edit]
 
   def index
