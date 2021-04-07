@@ -1,8 +1,7 @@
 # 基本のコントローラー
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!, except: [:edit, :destroy, :new]
+  before_action :authenticate_user!, except: [:edit, :destroy, :index]
   before_action :move_to_index, only:[:edit]
-                # :アクション名
 
   def index
     @prototypes = Prototype.all
@@ -19,7 +18,7 @@ class PrototypesController < ApplicationController
       @prototype.save
       redirect_to root_path
     else
-      render :new
+      render :index
     end
   end
 
@@ -56,7 +55,8 @@ class PrototypesController < ApplicationController
   end
 
   def move_to_index
-    unless user_signed_in?
+    @prototype = Prototype.find(params[:id])
+    unless user_signed_in? and @prototype.user == current_user
       redirect_to action: :index
     end
   end
